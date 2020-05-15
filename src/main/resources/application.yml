@@ -1,0 +1,7 @@
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.young: DEBUG
+server:
+  servlet:
+    context-path: /draft
