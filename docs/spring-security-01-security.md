@@ -294,3 +294,27 @@ public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 		}
 	}
 ```
+## Spring security 认证流程总结
+系统默认的用户名密码登录流程:
+```txt
+     1.UsernamePasswordAuthenticationFilter(拦截指定请求)             ->
+        2.UsernamePasswordAuthenticationToken(包装成这个类型的token去认证)     ->
+            3.AuthenticationManager(ProviderManager)(尝试各种认证)                ->
+                4.DaoAuthenticationProvider(确定这个类负责认证)                          ->
+                    5.UserDetailsService(查找用户信息用来对比请求参数)                           ->
+                        6.返回UserDetails(用户信息包装成这个对象)                                    ->
+                            7.Success则AuthenticatinSuccessHandler                                  ->
+```
+        
+    
+
+## 自定义定制化登录流程
+### 是想如何使用验证码+手机号登录?指定IP免登录
+以手机号+短信验证码为例:
+```text
+    参考用户名密码登录的流程:
+
+        SmsCodeAuthenticationFilter(验证验登录的流程)  ∽   UsernamePasswordAuthenticationFilter    
+        SmsCodeAuthenticationToken(验证码登录的Token)  ∽   UsernamePasswordAuthenticationToken
+        SmsCOdeAuthenticationProvider(这个类来负责具体认证)  ∽  DaoAuthenticationProvider         
+```
