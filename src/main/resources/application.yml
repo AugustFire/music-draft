@@ -5,3 +5,4 @@ logging:
 server:
   servlet:
     context-path: /draft
+  port: 8888
